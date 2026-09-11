@@ -292,3 +292,67 @@ export const DIAGRAM_NODES: DiagramNode[] = [
     tooltip: "Procurement support, expediting, FAT/SAT, logistics",
   },
 ];
+
+
+
+export interface AutomationPair {
+  icon: string;
+  text: string;
+  // Percent-based positions within the diagram container (top/left).
+  // "Rest" = normal/scattered state, "Hover" = converged state.
+  iconRest: { top: string; left: string };
+  iconHover: { top: string; left: string };
+  textRest: { top: string; left: string };
+  textHover: { top: string; left: string };
+  iconSize: string; // Tailwind width class, e.g. "w-[11%]"
+  textWidth: string; // Explicit width for this callout, e.g. "260px" or "22%"
+}
+
+export const AUTOMATION_PAIRS: AutomationPair[] = [
+  {
+    icon: "/img/automations/icon-ot-it.jpg",
+    text: "Connecting OT and IT in a practical, delivery-oriented way",
+    iconRest: { top: "8%", left: "2%" },
+    iconHover: { top: "10%", left: "32%" },
+    textRest: { top: "-30%", left: "2%" },
+    textHover: { top: "10%", left: "6%" },
+    iconSize: "w-[60px]",
+    textWidth: "250px",
+  },
+  {
+    icon: "/img/automations/icon-modular-network.jpg",
+    text: "Designing secure and scalable systems for both smaller skids/package units and larger production environments.",
+    iconRest: { top: "80%", left: "65%" },
+    iconHover: { top: "30%", left: "65%" },
+    textRest: { top: "35%", left: "76%" },
+    textHover: { top: "20%", left: "70%" },
+    iconSize: "w-[100px]",
+    textWidth: "410px",
+  },
+  {
+    icon: "/img/automations/icon-gear-cluster.jpg",
+    text: "Using a modular engineering approach for maintainability and future expansion",
+    iconRest: { top: "4%", left: "78%" },
+    iconHover: { top: "74%", left: "70%" },
+    textRest: { top: "92%", left: "82%" },
+    textHover: { top: "58%", left: "70%" },
+    iconSize: "w-[70px]",
+    textWidth: "300px",
+  },
+];
+
+// Callout with no paired icon — still animates a short distance on hover.
+export const AUTOMATION_SOLO1_CALLOUT = {
+  text: "Combining industrial automation engineering and cybersecurity thinking",
+  rest: { top: "45%", left: "2%" },
+  hover: { top: "45%", left: "10%" },
+  textWidth: "300px",
+};
+
+// Always visible, same spot in both states — no animation.
+export const AUTOMATION_SOLO2_CALLOUT = {
+  text: "Selecting technologies in a vendor-neutral way based on project needs",
+  rest: { top: "80%", left: "2%" },
+  hover: { top: "70%", left: "35%" },
+  textWidth: "330px",
+};

@@ -15,33 +15,62 @@ import Automation from "./components/Automation";
 
 const FADE_DURATION = 700;
 
-function App() {
+// Waits for every currently-rendered <img> to finish loading — but skips
+// loading="lazy" images, since those intentionally don't fetch until the
+// user scrolls near them and would otherwise block the loader forever.
+function waitForEagerImages(): Promise<void> {
+  const images = Array.from(document.images).filter(
+    (img) => img.loading !== "lazy"
+  );
 
-    const [loaderVisible, setLoaderVisible] = useState(true);
+  const promises = images.map((img) => {
+    if (img.complete) return Promise.resolve();
+    return new Promise<void>((resolve) => {
+      img.addEventListener("load", () => resolve(), { once: true });
+      img.addEventListener("error", () => resolve(), { once: true }); // don't hang on a broken image
+    });
+  });
+
+  return Promise.all(promises).then(() => undefined);
+}
+
+function waitForWindowLoad(): Promise<void> {
+  if (document.readyState === "complete") return Promise.resolve();
+  return new Promise((resolve) => {
+    window.addEventListener("load", () => resolve(), { once: true });
+  });
+}
+
+function App() {
+  const [loaderVisible, setLoaderVisible] = useState(true);
   const [loaderMounted, setLoaderMounted] = useState(true);
 
   useEffect(() => {
+    let cancelled = false;
+
     const hideLoader = () => {
+      if (cancelled) return;
       setLoaderVisible(false); // starts the opacity fade
       window.setTimeout(() => {
-        setLoaderMounted(false); // removes it from the DOM once the fade finishes
+        if (!cancelled) setLoaderMounted(false); // removes it from the DOM once the fade finishes
       }, FADE_DURATION);
     };
 
-    if (document.readyState === "complete") {
-      // Page (including images/fonts) already finished loading before this ran
-      hideLoader();
-    } else {
-      window.addEventListener("load", hideLoader);
-      return () => window.removeEventListener("load", hideLoader);
-    }
+    // Wait a frame so React has finished mounting/painting all <img> tags
+    // before we start scanning document.images — otherwise we'd query an
+    // empty or partially-rendered DOM and resolve instantly.
+    const raf = requestAnimationFrame(() => {
+      Promise.all([waitForWindowLoad(), waitForEagerImages()]).then(hideLoader);
+    });
+
+    return () => {
+      cancelled = true;
+      cancelAnimationFrame(raf);
+    };
   }, []);
-
-
 
   return (
     <>
-      
       {loaderMounted && <Loader visible={loaderVisible} />}
 
       <a className="sr-only" href="#main">
@@ -52,13 +81,12 @@ function App() {
 
       <main id="main">
         <Hero />
-         <Challenges />
-         <Automation />
+        <Challenges />
+        <Automation />
         <ServicePanels />
         <Experience />
         <Projects />
         <CapabilitiesDiagram />
-        
 
         <SplitList
           ariaLabel="Here when you need us"
@@ -84,7 +112,7 @@ function App() {
           }
           subtitle="Structured Thinking. Real-World Results."
           items={FAQ_ITEMS}
-        /> 
+        />
       </main>
 
       <Footer />

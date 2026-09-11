@@ -57,7 +57,7 @@ export default function Footer() {
   }, [isContactOpen]);
 
   const fieldClasses =
-    "h-[58px] w-full rounded-[4px] border border-white/10 bg-[#343434] " +
+    "h-[35px] w-full rounded-[4px] border border-white/10 bg-[#343434] " +
     "px-4 font-[family-name:var(--font-body)] text-[16px] text-white " +
     "outline-none transition-colors duration-300 placeholder:text-white/45 " +
     "focus:border-[#df252d] focus:ring-1 focus:ring-[#df252d]/30";
@@ -121,39 +121,39 @@ export default function Footer() {
             role="dialog"
             aria-modal="true"
             aria-labelledby="contact-modal-title"
-            className="relative mx-auto min-h-full w-full max-w-[1450px] overflow-hidden bg-[#282828] px-[clamp(24px,8vw,170px)] py-[clamp(70px,8vw,130px)] text-white shadow-2xl"
+            className="relative mx-auto min-h-full w-full max-w-[850px] overflow-hidden bg-[#282828] px-[clamp(24px,8vw,170px)] py-[clamp(30px,6vw,100px)] text-white shadow-2xl"
           >
             {/* Close button */}
             <button
               type="button"
               onClick={closeContactModal}
               aria-label="Close contact form"
-              className="group absolute top-8 right-8 flex h-12 w-12 items-center justify-center border-0 bg-transparent max-sm:top-4 max-sm:right-4"
+              className="group absolute top-4 right-4 flex h-8 w-8 items-center justify-center border-0 bg-transparent max-sm:top-4 max-sm:right-4"
             >
-              <span className="absolute h-[3px] w-12 rotate-45 bg-white transition-colors group-hover:bg-[#df252d]" />
-              <span className="absolute h-[3px] w-12 -rotate-45 bg-white transition-colors group-hover:bg-[#df252d]" />
+              <span className="absolute h-[3px] w-6 rotate-45 bg-white transition-colors group-hover:bg-[#df252d]" />
+              <span className="absolute h-[3px] w-6 -rotate-45 bg-white transition-colors group-hover:bg-[#df252d]" />
             </button>
 
             {/* Heading */}
-            <div className="mb-[clamp(55px,7vw,100px)] text-center">
+            <div className="mb-[clamp(45px,6vw,40px)] text-center">
               <h2
                 id="contact-modal-title"
-                className="m-0 font-[family-name:var(--font-body)] text-[clamp(38px,4vw,62px)] leading-tight font-semibold"
+                className="m-0 font-[family-name:var(--font-display)] text-[clamp(38px,4vw,62px)] leading-tight font-bold"
               >
                 <span className="text-[#df252d]">Contact</span>{" "}
                 <span className="text-white">us</span>
               </h2>
 
-              <p className="mt-5 font-[family-name:var(--font-body)] text-[clamp(17px,2vw,28px)] font-light tracking-wide text-white/95">
+              <p className=" font-[family-name:var(--font-body)] text-[clamp(16px,2vw,22px)] font-light tracking-wide text-white/95">
                 We’re here to help and look forward to hearing from you.
               </p>
             </div>
 
             {/* Contact form */}
             <form onSubmit={handleSubmit}>
-              <div className="grid grid-cols-2 gap-x-4 gap-y-10 max-md:grid-cols-1 max-md:gap-y-6">
+              <div className="grid grid-cols-2 gap-x-4 gap-y-5 max-md:grid-cols-1 max-md:gap-y-6">
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     First name <span className="text-[#df252d]">*</span>
                   </span>
 
@@ -167,7 +167,7 @@ export default function Footer() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Last name <span className="text-[#df252d]">*</span>
                   </span>
 
@@ -181,7 +181,7 @@ export default function Footer() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Company <span className="text-[#df252d]">*</span>
                   </span>
 
@@ -195,7 +195,7 @@ export default function Footer() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Email <span className="text-[#df252d]">*</span>
                   </span>
 
@@ -209,7 +209,7 @@ export default function Footer() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Phone number
                   </span>
 
@@ -222,7 +222,7 @@ export default function Footer() {
                 </label>
 
                 <label className="block">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Industry <span className="text-[#df252d]">*</span>
                   </span>
 
@@ -236,7 +236,7 @@ export default function Footer() {
                 </label>
 
                 <label className="col-span-2 block max-md:col-span-1">
-                  <span className="mb-5 block font-[family-name:var(--font-body)] text-[17px]">
+                  <span className="mb-3 block font-[family-name:var(--font-body)] text-[14px]">
                     Message
                   </span>
 
@@ -265,7 +265,7 @@ export default function Footer() {
               <div className="flex items-center gap-5">
                 <a href="#" aria-label="Facebook">
                   <img
-                    src="/img/facebook.svg"
+                    src="/img/fb-icon.svg"
                     alt=""
                     className="h-5 w-5"
                   />
@@ -273,7 +273,7 @@ export default function Footer() {
 
                 <a href="#" aria-label="Instagram">
                   <img
-                    src="/img/instagram.svg"
+                    src="/img/instagram-icon.svg"
                     alt=""
                     className="h-5 w-5"
                   />
@@ -281,7 +281,7 @@ export default function Footer() {
 
                 <a href="#" aria-label="LinkedIn">
                   <img
-                    src="/img/linkedin.svg"
+                    src="/img/linkedin-icon.svg"
                     alt=""
                     className="h-5 w-5"
                   />
@@ -289,7 +289,7 @@ export default function Footer() {
 
                 <a href="#" aria-label="YouTube">
                   <img
-                    src="/img/youtube.svg"
+                    src="/img/youtube-icon.svg"
                     alt=""
                     className="h-5 w-5"
                   />
