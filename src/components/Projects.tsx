@@ -2,18 +2,21 @@ import { PROJECTS } from "../data/content";
 
 export default function Projects() {
   return (
-    <section className="relative z-20 bg-black py-[clamp(56px,9vw,130px)]" aria-label="Project experience">
-      <div className="mx-auto max-w-[1240px] px-[clamp(20px,6vw,100px)]">
-        <h2 className="mb-10 font-[family-name:var(--font-body)] text-[clamp(24px,3vw,32px)] font-medium tracking-[0.96px]">
+    <section id="projects" className="relative z-20 bg-black py-[clamp(56px,9vw,130px)]" aria-label="Project experience">
+      <div className="mx-auto max-w-[1240px] px-[clamp(20px,6vw,100px)] max-md:px-0">
+        <h2 className="mb-10 font-[family-name:var(--font-body)] text-[clamp(24px,3vw,32px)] font-medium tracking-[0.96px] max-md:px-[clamp(20px,6vw,100px)]">
           Project
           <br />
           Experience
         </h2>
 
-        <div className="grid grid-cols-4 gap-6 max-xl:grid-cols-2 max-md:grid-cols-1">
+        {/* Desktop / tablet: grid. Mobile: horizontal snap-scroll, one card per view. */}
+        <div
+          className="grid grid-cols-4 gap-6 max-xl:grid-cols-2 max-md:flex max-md:grid-cols-none max-md:gap-0 max-md:overflow-x-auto max-md:px-[clamp(20px,6vw,100px)] max-md:[scroll-snap-type:x_mandatory] max-md:[scrollbar-width:none] max-md:[&::-webkit-scrollbar]:hidden"
+        >
           {PROJECTS.map((project) => (
             <article
-              className="group relative h-[clamp(420px,42vw,480px)] overflow-hidden rounded-2xl border border-[#272727]"
+              className="group relative h-[clamp(420px,42vw,480px)] overflow-hidden rounded-2xl border border-[#272727] max-md:h-[440px] max-md:w-full max-md:flex-none max-md:[scroll-snap-align:center]"
               key={project.title}
             >
               {/* Background image — always fills the card, never moves */}

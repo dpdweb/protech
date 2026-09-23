@@ -3,11 +3,18 @@ import { SERVICE_PANELS } from "../data/content";
 import { ChevronRight, ChevronLeft } from 'lucide-react';
 
 // Displayed in reverse order: 04, 03, 02, 01
-const BASE_PANELS = [...SERVICE_PANELS].reverse();
+const BASE_PANELS = SERVICE_PANELS;
 const total = BASE_PANELS.length;
 
 // Triple the data so there's always a buffer of clones to scroll into
 const ORDERED_PANELS = [...BASE_PANELS, ...BASE_PANELS, ...BASE_PANELS];
+
+// Minimum vertical wheel delta before it counts as an intentional
+// "advance one panel" gesture — filters out tiny trackpad jitter.
+const WHEEL_THRESHOLD = 12;
+// Cooldown after a wheel-triggered navigation before the next one can fire,
+// so a single scroll gesture doesn't fire through several panels at once.
+const WHEEL_COOLDOWN = 700;
 
 export default function ServicePanels() {
   const sliderRef = useRef<HTMLDivElement>(null);
@@ -16,17 +23,12 @@ export default function ServicePanels() {
   // Start in the middle copy
   const [currentIndex, setCurrentIndex] = useState(total);
   const [hasNavigated, setHasNavigated] = useState(false);
-  const [imageTop, setImageTop] = useState(0);
   const isResetting = useRef(false);
+  const isWheelLocked = useRef(false);
 
-  // Measure where the image starts (bottom of the number+title block) so the
-  // static button bar can align to it — every panel shares the same header
-  // structure, so this offset holds regardless of which one is active.
   useLayoutEffect(() => {
     const measure = () => {
-      if (headerRef.current) {
-        setImageTop(headerRef.current.offsetHeight);
-      }
+      // (kept for future use, currently a no-op)
     };
 
     measure();
@@ -69,8 +71,6 @@ export default function ServicePanels() {
     setCurrentIndex(index);
   };
 
-  // After a smooth scroll settles, silently snap back into the middle
-  // copy if we've drifted into the cloned start/end buffers.
   const handleScrollEnd = () => {
     if (isResetting.current) {
       isResetting.current = false;
@@ -101,24 +101,44 @@ export default function ServicePanels() {
     scrollToPanel(currentIndex - 1);
   };
 
-  // const activeIcon = BASE_PANELS[currentIndex % total].nextIcon;
+  // Vertical wheel input drives horizontal panel navigation.
+  const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
+    // Ignore genuinely horizontal gestures (e.g. a trackpad swipe already
+    // moving the slider natively) so we don't fight the browser's own scroll.
+    if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
+
+    if (Math.abs(event.deltaY) < WHEEL_THRESHOLD) return;
+
+    // Stop the page itself from scrolling vertically while the user is
+    // interacting with this slider via the wheel.
+    event.preventDefault();
+
+    if (isWheelLocked.current) return;
+    isWheelLocked.current = true;
+
+    if (event.deltaY > 0) {
+      scrollNext();
+    } else {
+      scrollPrevious();
+    }
+
+    window.setTimeout(() => {
+      isWheelLocked.current = false;
+    }, WHEEL_COOLDOWN);
+  };
 
   return (
-    <section className="relative z-10 bg-black py-[clamp(56px,9vw,130px)]" aria-label="Service areas">
+    <section id="services" className="relative z-10 bg-black py-[clamp(56px,9vw,130px)]" aria-label="Service areas">
       {/* Static control bar — pinned to the image's top edge, ignores horizontal scroll */}
-      <div
-        className="pointer-events-none absolute right-0 left-0 top-4 z-20 flex justify-end px-[clamp(20px,6vw,100px)]"
-        style={{ top: imageTop }}
-      >
-        <div className="pointer-events-auto flex items-center gap-5">
+      <div className="pointer-events-none absolute right-0 left-0 top-60 z-20 flex justify-end px-[clamp(20px,6vw,100px)] max-md:top-20 max-[430px]:top-16">
+        <div className="pointer-events-auto flex items-center gap-5 max-md:gap-3">
           {hasNavigated && (
             <button
               type="button"
               onClick={scrollPrevious}
-              className="inline-flex shrink-0 items-center gap-1.5 border-none bg-none font-[family-name:var(--font-body)] text-xs leading-[22px] font-semibold tracking-[0.36px] text-white transition-opacity hover:opacity-70"
+              className="inline-flex shrink-0 items-center gap-1.5 rounded-[64px] border-none bg-[linear-gradient(46deg,#9d1a20_0%,#d0262c_50%,#9d1a20_100%)] bg-[length:200%_100%] bg-[position:0%_0%] px-5 py-2.5 font-[family-name:var(--font-body)] text-xs leading-[22px] font-semibold tracking-[0.36px] text-white transition-[background-position] duration-500 ease-out hover:bg-[position:100%_0%]"
               aria-label="View previous service"
             >
-    
               <ChevronLeft className="h-3 w-[13px]" />
               Previous
             </button>
@@ -127,11 +147,10 @@ export default function ServicePanels() {
           <button
             type="button"
             onClick={scrollNext}
-            className="inline-flex shrink-0 items-center gap-1.5 border-none bg-none font-[family-name:var(--font-body)] text-xs leading-[22px] font-semibold tracking-[0.36px] text-white transition-opacity hover:opacity-70"
+            className="inline-flex shrink-0 items-center gap-1.5 rounded-[64px] border-none bg-[linear-gradient(46deg,#9d1a20_0%,#d0262c_50%,#9d1a20_100%)] bg-[length:200%_100%] bg-[position:0%_0%] px-5 py-2.5 font-[family-name:var(--font-body)] text-xs leading-[22px] font-semibold tracking-[0.36px] text-white transition-[background-position] duration-500 ease-out hover:bg-[position:100%_0%]"
             aria-label="View next service"
           >
             Next
-     
             <ChevronRight className="h-3 w-[13px]" />
           </button>
         </div>
@@ -143,6 +162,7 @@ export default function ServicePanels() {
           window.clearTimeout((sliderRef.current as any)?._scrollTimer);
           (sliderRef.current as any)._scrollTimer = window.setTimeout(handleScrollEnd, 120);
         }}
+        onWheel={handleWheel}
         className="flex overflow-x-auto scroll-smooth [scroll-snap-type:x_mandatory] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {ORDERED_PANELS.map((panel, i) => (
@@ -153,8 +173,6 @@ export default function ServicePanels() {
             key={`${panel.number}-${i}`}
           >
             <div className="px-[clamp(20px,6vw,100px)]">
-              {/* Header is only measured from the first instance; every copy
-                  renders identically so alignment holds for all panels. */}
               <div ref={i === 0 ? headerRef : undefined}>
                 <p className="m-0 mb-6 font-[family-name:var(--font-display)] text-[clamp(64px,9vw,120px)] font-bold tracking-[3.6px] text-white max-[430px]:text-[56px]">
                   {panel.number}

@@ -1,4 +1,5 @@
-import { ChevronLeft } from 'lucide-react';
+import { ChevronLeft } from "lucide-react";
+import { useContactModal } from "../context/ContactModalContext";
 
 interface NavPanelProps {
   open: boolean;
@@ -12,7 +13,36 @@ const NAV_LINKS = [
   { label: "Contact Us", href: "#contact" },
 ];
 
+// Fixed header height to offset scroll targets so sections don't land
+// hidden underneath it. Adjust if the header's rendered height changes.
+const HEADER_OFFSET = 96;
+
 export default function NavPanel({ open, onClose }: NavPanelProps) {
+  const { open: openContactModal } = useContactModal();
+
+  const linkClasses =
+    "group flex w-full items-center justify-between gap-3 border-b border-white/10 px-[70px] py-[25px] font-[family-name:var(--font-body)] text-[16px] tracking-wide text-white transition-colors duration-300 hover:border-[#C10005] hover:text-[#C10005] hover:bg-[#464646] focus:border-[#C10005] focus:text-[#C10005] focus:bg-[#464646]";
+
+  const scrollToSection = (href: string) => {
+    const targetId = href.replace("#", "");
+    const target = document.getElementById(targetId);
+    if (!target) return;
+
+    const customContainer = document.querySelector<HTMLElement>("[data-scroll-container]");
+    const scrollContainer = customContainer || document.scrollingElement;
+
+    const currentOffset =
+      scrollContainer === document.scrollingElement ? window.scrollY : (scrollContainer as HTMLElement)?.scrollTop ?? 0;
+
+    const targetTop = target.getBoundingClientRect().top + currentOffset - HEADER_OFFSET;
+
+    scrollContainer?.scrollTo({
+      top: targetTop,
+      left: 0,
+      behavior: "smooth",
+    });
+  };
+
   return (
     <>
       <div
@@ -43,20 +73,38 @@ export default function NavPanel({ open, onClose }: NavPanelProps) {
         </button>
         <ul className="m-0 flex list-none flex-col p-0">
           {NAV_LINKS.map((link) => (
-          <li key={link.label}>
-            <a
-              href={link.href}
-              onClick={onClose}
-              className="group flex items-center justify-between gap-3 border-b border-white/10 px-[70px] py-[25px] font-[family-name:var(--font-body)] text-[16px]  tracking-wide text-white transition-colors duration-300 hover:border-[#C10005] hover:text-[#C10005] hover:bg-[#464646] focus:border-[#C10005] focus:text-[#C10005] focus:bg-[#464646]"
-            >
-              <ChevronLeft className="transition-transform duration-300 w-[14px]"  />
-              
-
-              <span className="ml-auto text-right transition-colors duration-300">
-                {link.label}
-              </span>
-            </a>
-          </li>
+            <li key={link.label}>
+              {link.label === "Contact Us" ? (
+                <button
+                  type="button"
+                  onClick={() => {
+                    onClose();
+                    openContactModal();
+                  }}
+                  className={linkClasses}
+                >
+                  <ChevronLeft className="w-[14px] transition-transform duration-300" />
+                  <span className="ml-auto text-right transition-colors duration-300">
+                    {link.label}
+                  </span>
+                </button>
+              ) : (
+                
+                <a  href={link.href}
+                  onClick={(event) => {
+                    event.preventDefault();
+                    scrollToSection(link.href);
+                    onClose();
+                  }}
+                  className={linkClasses}
+                >
+                  <ChevronLeft className="w-[14px] transition-transform duration-300" />
+                  <span className="ml-auto text-right transition-colors duration-300">
+                    {link.label}
+                  </span>
+                </a>
+              )}
+            </li>
           ))}
         </ul>
       </nav>

@@ -43,7 +43,7 @@ export default function FloatingActions() {
     <div className="fixed right-0 bottom-24 z-[90] flex flex-col items-end gap-2 max-md:bottom-[76px]">
       {/* Call button */}
       <a
-        href="tel:+1234567890"
+        href="tel:+971547768027"
         aria-label="Call us"
         className={buttonClasses}
       >

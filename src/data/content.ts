@@ -89,7 +89,7 @@ export const SERVICE_PANELS: ServicePanel[] = [
     number: "04",
     title: "Project Delivery & Lifecycle Support",
     nextIcon: "/img/services/vector-28.svg",
-    image: "/img/services/project_delivery_lifecycle_support.png",
+    image: "/img/services/project_delivery_lifecycle_support.jpg",
     listA: LIST_A,
     listB: LIST_B,
   },
@@ -295,17 +295,31 @@ export const DIAGRAM_NODES: DiagramNode[] = [
 
 
 
+export interface Position {
+  top: string;
+  left: string;
+}
+
 export interface AutomationPair {
   icon: string;
   text: string;
-  // Percent-based positions within the diagram container (top/left).
-  // "Rest" = normal/scattered state, "Hover" = converged state.
-  iconRest: { top: string; left: string };
-  iconHover: { top: string; left: string };
-  textRest: { top: string; left: string };
-  textHover: { top: string; left: string };
-  iconSize: string; // Tailwind width class, e.g. "w-[11%]"
-  textWidth: string; // Explicit width for this callout, e.g. "260px" or "22%"
+  iconRest: Position;
+  iconHover: Position;
+  textRest: Position;
+  textHover: Position;
+  iconSize: string;
+  textWidth: string;
+  iconRestMd?: Position;
+  iconHoverMd?: Position;
+  textRestMd?: Position;
+  textHoverMd?: Position;
+  iconSizeMd?: string;
+  textWidthMd?: string;
+  // Mobile: static, no hover state — just one fixed position each.
+  iconMobile: Position;
+  textMobile: Position;
+  iconSizeMobile: string;
+  textWidthMobile: string;
 }
 
 export const AUTOMATION_PAIRS: AutomationPair[] = [
@@ -318,6 +332,16 @@ export const AUTOMATION_PAIRS: AutomationPair[] = [
     textHover: { top: "10%", left: "6%" },
     iconSize: "w-[60px]",
     textWidth: "250px",
+    iconRestMd: { top: "6%", left: "6%" },
+    iconHoverMd: { top: "14%", left: "28%" },
+    textRestMd: { top: "-14%", left: "6%" },
+    textHoverMd: { top: "16%", left: "10%" },
+    iconSizeMd: "w-[46px]",
+    textWidthMd: "190px",
+    iconMobile: { top: "24%", left: "8%" },
+    textMobile: { top: "10%", left: "-5%" },
+    iconSizeMobile: "w-[48px]",
+    textWidthMobile: "90%",
   },
   {
     icon: "/img/automations/icon-modular-network.jpg",
@@ -328,6 +352,16 @@ export const AUTOMATION_PAIRS: AutomationPair[] = [
     textHover: { top: "20%", left: "70%" },
     iconSize: "w-[100px]",
     textWidth: "410px",
+    iconRestMd: { top: "78%", left: "70%" },
+    iconHoverMd: { top: "32%", left: "68%" },
+    textRestMd: { top: "40%", left: "78%" },
+    textHoverMd: { top: "22%", left: "68%" },
+    iconSizeMd: "w-[70px]",
+    textWidthMd: "260px",
+    iconMobile: { top: "20%", left: "80%" },
+    textMobile: { top: "-5%", left: "7%" },
+    iconSizeMobile: "w-[48px]",
+    textWidthMobile: "95%",
   },
   {
     icon: "/img/automations/icon-gear-cluster.jpg",
@@ -338,21 +372,39 @@ export const AUTOMATION_PAIRS: AutomationPair[] = [
     textHover: { top: "58%", left: "70%" },
     iconSize: "w-[70px]",
     textWidth: "300px",
+    iconRestMd: { top: "6%", left: "80%" },
+    iconHoverMd: { top: "70%", left: "72%" },
+    textRestMd: { top: "88%", left: "80%" },
+    textHoverMd: { top: "60%", left: "68%" },
+    iconSizeMd: "w-[52px]",
+    textWidthMd: "220px",
+    iconMobile: { top: "47%", left: "80%" },
+    textMobile: { top: "54%", left: "-2%" },
+    iconSizeMobile: "w-[48px]",
+    textWidthMobile: "78%",
   },
 ];
 
-// Callout with no paired icon — still animates a short distance on hover.
 export const AUTOMATION_SOLO1_CALLOUT = {
   text: "Combining industrial automation engineering and cybersecurity thinking",
   rest: { top: "45%", left: "2%" },
   hover: { top: "45%", left: "10%" },
   textWidth: "300px",
+  restMd: { top: "48%", left: "4%" },
+  hoverMd: { top: "48%", left: "8%" },
+  textWidthMd: "220px",
+  mobile: { top: "32%", left: "12%" },
+  textWidthMobile: "84%",
 };
 
-// Always visible, same spot in both states — no animation.
 export const AUTOMATION_SOLO2_CALLOUT = {
   text: "Selecting technologies in a vendor-neutral way based on project needs",
   rest: { top: "80%", left: "2%" },
   hover: { top: "70%", left: "35%" },
   textWidth: "330px",
+  restMd: { top: "82%", left: "6%" },
+  hoverMd: { top: "74%", left: "32%" },
+  textWidthMd: "240px",
+  mobile: { top: "45%", left: "-4%" },
+  textWidthMobile: "84%",
 };

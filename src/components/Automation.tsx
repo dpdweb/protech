@@ -1,25 +1,24 @@
 import { AUTOMATION_PAIRS, AUTOMATION_SOLO1_CALLOUT, AUTOMATION_SOLO2_CALLOUT } from "../data/content";
 
-// Shared transition classes for anything that moves between rest/hover positions.
-const MOVE_TRANSITION = "transition-[top,left] duration-700 ease-in-out";
+const MOVE_TRANSITION = "transition-[top,left,width] duration-700 ease-in-out";
 
-// CSS custom properties used for the rest/hover position swap.
-// TypeScript's CSSProperties type doesn't know about custom props by default,
-// so this extends it to allow "--rest-top" etc. without a cast to `any`.
 type PositionVars = React.CSSProperties & {
   "--rest-top"?: string;
   "--rest-left"?: string;
   "--hover-top"?: string;
   "--hover-left"?: string;
+  "--rest-top-md"?: string;
+  "--rest-left-md"?: string;
+  "--hover-top-md"?: string;
+  "--hover-left-md"?: string;
 };
 
 export default function Automation() {
   return (
     <section
-      className="sticky top-0 z-0 overflow-hidden py-[clamp(56px,9vw,100px)]"
-      aria-label="Secure automation engineered for industry"
-    >
-      {/* Background image — static, fills the section */}
+  className="relative z-0 overflow-hidden py-[clamp(56px,9vw,100px)]"
+  aria-label="Secure automation engineered for industry"
+>
       <img
         className="absolute inset-0 h-full w-full object-cover"
         src="/img/automations/automation_bg.png"
@@ -29,7 +28,6 @@ export default function Automation() {
       <div className="absolute inset-0 -z-10" />
 
       <div className="relative mx-auto max-w-[1400px] px-[clamp(20px,6vw,100px)]">
-        {/* Heading */}
         <div className="mb-16 text-center">
           <h2 className="m-0 mb-4 font-[family-name:var(--font-display)] text-[clamp(28px,4vw,44px)] leading-12 font-bold tracking-[0.9px] text-white">
             Secure Automation.
@@ -41,10 +39,9 @@ export default function Automation() {
           </p>
         </div>
 
-        {/* Desktop: floating diagram. Hovering anywhere inside converges the
-            scattered icon/callout pairs into their orbit positions. */}
-        <div className="group relative mx-auto hidden aspect-[2170/850] w-full max-w-[1400px] lg:block">
-          {/* Center logo hub — fixed, never moves */}
+        {/* Desktop / tablet: floating diagram with hover-driven convergence.
+            Visible from md up. */}
+        <div className="group relative mx-auto hidden aspect-[2170/850] w-full max-w-[1400px] md:block">
           <div className="absolute top-1/3 left-1/2 z-20 aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_0_60px_rgba(207,38,43,0.5)]">
             <img
               src="/img/automations/logo-mark.svg"
@@ -53,11 +50,8 @@ export default function Automation() {
             />
           </div>
 
-          {/* Icon + callout pairs — each converges from its rest position to
-              its hover position as one unit when the diagram is hovered. */}
           {AUTOMATION_PAIRS.map((pair) => (
             <div key={pair.text}>
-              {/* Icon */}
               <div
                 className={`absolute z-10 aspect-square -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-white/10 shadow-[0_0_30px_rgba(207,38,43,0.35)] ${pair.iconSize} ${MOVE_TRANSITION}`}
                 style={
@@ -66,6 +60,10 @@ export default function Automation() {
                     "--rest-left": pair.iconRest.left,
                     "--hover-top": pair.iconHover.top,
                     "--hover-left": pair.iconHover.left,
+                    "--rest-top-md": pair.iconRestMd?.top ?? pair.iconRest.top,
+                    "--rest-left-md": pair.iconRestMd?.left ?? pair.iconRest.left,
+                    "--hover-top-md": pair.iconHoverMd?.top ?? pair.iconHover.top,
+                    "--hover-left-md": pair.iconHoverMd?.left ?? pair.iconHover.left,
                     top: "var(--rest-top)",
                     left: "var(--rest-left)",
                   } as PositionVars
@@ -75,7 +73,6 @@ export default function Automation() {
                 <img src={pair.icon} alt="" className="h-full w-full object-cover" loading="lazy" />
               </div>
 
-              {/* Callout — width is explicit per item via pair.textWidth */}
               <div
                 className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
                 style={
@@ -84,6 +81,10 @@ export default function Automation() {
                     "--rest-left": pair.textRest.left,
                     "--hover-top": pair.textHover.top,
                     "--hover-left": pair.textHover.left,
+                    "--rest-top-md": pair.textRestMd?.top ?? pair.textRest.top,
+                    "--rest-left-md": pair.textRestMd?.left ?? pair.textRest.left,
+                    "--hover-top-md": pair.textHoverMd?.top ?? pair.textHover.top,
+                    "--hover-left-md": pair.textHoverMd?.left ?? pair.textHover.left,
                     top: "var(--rest-top)",
                     left: "var(--rest-left)",
                     width: pair.textWidth,
@@ -98,61 +99,65 @@ export default function Automation() {
             </div>
           ))}
 
-          {/* Solo callout — small travel, no paired icon, own width */}
-          <div
-            className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
-            style={
-              {
-                "--rest-top": AUTOMATION_SOLO1_CALLOUT.rest.top,
-                "--rest-left": AUTOMATION_SOLO1_CALLOUT.rest.left,
-                "--hover-top": AUTOMATION_SOLO1_CALLOUT.hover.top,
-                "--hover-left": AUTOMATION_SOLO1_CALLOUT.hover.left,
-                top: "var(--rest-top)",
-                left: "var(--rest-left)",
-                width: AUTOMATION_SOLO1_CALLOUT.textWidth,
-              } as PositionVars
-            }
-            data-pair-text
-          >
-            <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
-              {AUTOMATION_SOLO1_CALLOUT.text}
-            </p>
-          </div>
+          {[AUTOMATION_SOLO1_CALLOUT, AUTOMATION_SOLO2_CALLOUT].map((solo) => (
+            <div
+              key={solo.text}
+              className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
+              style={
+                {
+                  "--rest-top": solo.rest.top,
+                  "--rest-left": solo.rest.left,
+                  "--hover-top": solo.hover.top,
+                  "--hover-left": solo.hover.left,
+                  "--rest-top-md": solo.restMd?.top ?? solo.rest.top,
+                  "--rest-left-md": solo.restMd?.left ?? solo.rest.left,
+                  "--hover-top-md": solo.hoverMd?.top ?? solo.hover.top,
+                  "--hover-left-md": solo.hoverMd?.left ?? solo.hover.left,
+                  top: "var(--rest-top)",
+                  left: "var(--rest-left)",
+                  width: solo.textWidth,
+                } as PositionVars
+              }
+              data-pair-text
+            >
+              <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
+                {solo.text}
+              </p>
+            </div>
+          ))}
 
-          {/* Static callout — always in the same spot, never animates, own width */}
-          <div
-            className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
-            style={
-              {
-                "--rest-top": AUTOMATION_SOLO2_CALLOUT.rest.top,
-                "--rest-left": AUTOMATION_SOLO2_CALLOUT.rest.left,
-                "--hover-top": AUTOMATION_SOLO2_CALLOUT.hover.top,
-                "--hover-left": AUTOMATION_SOLO2_CALLOUT.hover.left,
-                top: "var(--rest-top)",
-                left: "var(--rest-left)",
-                width: AUTOMATION_SOLO2_CALLOUT.textWidth,
-              } as PositionVars
-            }
-            data-pair-text
-          >
-            <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
-              {AUTOMATION_SOLO2_CALLOUT.text}
-            </p>
-          </div>
-
-          {/* Hover-triggered position overrides, scoped to this diagram instance */}
+          {/* Position rules: default (desktop, lg+) uses --rest-* / --hover-*;
+              tablet (md to just below lg) switches to the -md variants. */}
           <style>{`
+            [data-pair-icon], [data-pair-text] {
+              top: var(--rest-top) !important;
+              left: var(--rest-left) !important;
+            }
             .group:hover [data-pair-icon],
             .group:hover [data-pair-text] {
               top: var(--hover-top) !important;
               left: var(--hover-left) !important;
             }
+
+            @media (max-width: 1023px) {
+              [data-pair-icon], [data-pair-text] {
+                top: var(--rest-top-md) !important;
+                left: var(--rest-left-md) !important;
+              }
+              .group:hover [data-pair-icon],
+              .group:hover [data-pair-text] {
+                top: var(--hover-top-md) !important;
+                left: var(--hover-left-md) !important;
+              }
+            }
           `}</style>
         </div>
 
-        {/* Mobile / tablet: simple stacked fallback */}
-        <div className="flex flex-col items-center gap-8 lg:hidden">
-          <div className="aspect-square w-[42%] max-w-[220px] overflow-hidden rounded-full bg-white shadow-[0_0_50px_rgba(207,38,43,0.5)]">
+        {/* Mobile: same absolute-positioned diagram structure as desktop,
+            but every element sits at one static position — no hover state,
+            no transition, nothing animates. */}
+        <div className="relative mx-auto block w-full md:hidden" style={{ minHeight: "760px" }}>
+          <div className="absolute  top-[25%] left-1/2 -z-0 aspect-square w-[110px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_0_60px_rgba(207,38,43,0.5)]">
             <img
               src="/img/automations/logo-mark.svg"
               alt="ProTechX Systems"
@@ -160,25 +165,54 @@ export default function Automation() {
             />
           </div>
 
-          <ul className="m-0 flex w-full max-w-[520px] list-none flex-col gap-4 p-0">
-            {AUTOMATION_PAIRS.map((pair) => (
-              <li key={pair.text} className="rounded-2xl border border-white/10 bg-black/40 px-6 py-4 text-center">
-                <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
+          {AUTOMATION_PAIRS.map((pair) => (
+            <div key={pair.text}>
+              {/* Icon — static position, no transition */}
+              <div
+                className={`absolute z-10 aspect-square overflow-hidden rounded-full border border-white/10 shadow-[0_0_30px_rgba(207,38,43,0.35)] ${pair.iconSizeMobile}`}
+                style={{ top: pair.iconMobile.top, left: pair.iconMobile.left }}
+              >
+                <img src={pair.icon} alt="" className="h-full w-full object-cover" loading="lazy" />
+              </div>
+
+              {/* Callout — static position, no transition */}
+              <div
+                className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
+                style={{ top: pair.textMobile.top, left: pair.textMobile.left, width: pair.textWidthMobile }}
+              >
+                <p className="m-0 font-[family-name:var(--font-body)] text-[10px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
                   {pair.text}
                 </p>
-              </li>
-            ))}
-            <li className="rounded-2xl border border-white/10 bg-black/40 px-6 py-4 text-center">
-              <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
-                {AUTOMATION_SOLO1_CALLOUT.text}
-              </p>
-            </li>
-            <li className="rounded-2xl border border-white/10 bg-black/40 px-6 py-4 text-center">
-              <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
-                {AUTOMATION_SOLO1_CALLOUT.text}
-              </p>
-            </li>
-          </ul>
+              </div>
+            </div>
+          ))}
+
+          {/* Solo callouts — static, text-only, same as desktop */}
+          <div
+            className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
+            style={{
+              top: AUTOMATION_SOLO1_CALLOUT.mobile.top,
+              left: AUTOMATION_SOLO1_CALLOUT.mobile.left,
+              width: AUTOMATION_SOLO1_CALLOUT.textWidthMobile,
+            }}
+          >
+            <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
+              {AUTOMATION_SOLO1_CALLOUT.text}
+            </p>
+          </div>
+
+          <div
+            className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
+            style={{
+              top: AUTOMATION_SOLO2_CALLOUT.mobile.top,
+              left: AUTOMATION_SOLO2_CALLOUT.mobile.left,
+              width: AUTOMATION_SOLO2_CALLOUT.textWidthMobile,
+            }}
+          >
+            <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
+              {AUTOMATION_SOLO2_CALLOUT.text}
+            </p>
+          </div>
         </div>
       </div>
     </section>

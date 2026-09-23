@@ -12,12 +12,13 @@ import FloatingActions from "./components/FloatingActions";
 import { CAPABILITY_ITEMS, FAQ_ITEMS } from "./data/content";
 import Loader from "./components/Loader";
 import Automation from "./components/Automation";
+import ContactModal from "./components/ContactModal";
+import { ContactModalProvider } from "./context/ContactModalContext";
+
+// import ComingSoon from "./components/ComingSoon";
 
 const FADE_DURATION = 700;
 
-// Waits for every currently-rendered <img> to finish loading — but skips
-// loading="lazy" images, since those intentionally don't fetch until the
-// user scrolls near them and would otherwise block the loader forever.
 function waitForEagerImages(): Promise<void> {
   const images = Array.from(document.images).filter(
     (img) => img.loading !== "lazy"
@@ -27,7 +28,7 @@ function waitForEagerImages(): Promise<void> {
     if (img.complete) return Promise.resolve();
     return new Promise<void>((resolve) => {
       img.addEventListener("load", () => resolve(), { once: true });
-      img.addEventListener("error", () => resolve(), { once: true }); // don't hang on a broken image
+      img.addEventListener("error", () => resolve(), { once: true });
     });
   });
 
@@ -50,15 +51,12 @@ function App() {
 
     const hideLoader = () => {
       if (cancelled) return;
-      setLoaderVisible(false); // starts the opacity fade
+      setLoaderVisible(false);
       window.setTimeout(() => {
-        if (!cancelled) setLoaderMounted(false); // removes it from the DOM once the fade finishes
+        if (!cancelled) setLoaderMounted(false);
       }, FADE_DURATION);
     };
 
-    // Wait a frame so React has finished mounting/painting all <img> tags
-    // before we start scanning document.images — otherwise we'd query an
-    // empty or partially-rendered DOM and resolve instantly.
     const raf = requestAnimationFrame(() => {
       Promise.all([waitForWindowLoad(), waitForEagerImages()]).then(hideLoader);
     });
@@ -70,8 +68,10 @@ function App() {
   }, []);
 
   return (
-    <>
+    <ContactModalProvider>
       {loaderMounted && <Loader visible={loaderVisible} />}
+
+      {/* <ComingSoon /> */}
 
       <a className="sr-only" href="#main">
         Skip to main content
@@ -117,7 +117,8 @@ function App() {
 
       <Footer />
       <FloatingActions />
-    </>
+      <ContactModal />
+    </ContactModalProvider>
   );
 }
 
