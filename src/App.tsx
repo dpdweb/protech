@@ -1,17 +1,18 @@
 import { useEffect, useState } from "react";
-import Header from "./components/Header";
-import Hero from "./components/Hero";
-import Challenges from "./components/Challenges";
-import ServicePanels from "./components/ServicePanels";
-import Experience from "./components/Experience";
-import Projects from "./components/Projects";
-import CapabilitiesDiagram from "./components/CapabilitiesDiagram";
-import SplitList from "./components/SplitList";
-import Footer from "./components/Footer";
-import FloatingActions from "./components/FloatingActions";
-import { CAPABILITY_ITEMS, FAQ_ITEMS } from "./data/content";
+// import Header from "./components/Header";
+// import Hero from "./components/Hero";
+// import Challenges from "./components/Challenges";
+// import ServicePanels from "./components/ServicePanels";
+// import Experience from "./components/Experience";
+// import Projects from "./components/Projects";
+// import CapabilitiesDiagram from "./components/CapabilitiesDiagram";
+// import SplitList from "./components/SplitList";
+// import Footer from "./components/Footer";
+// import FloatingActions from "./components/FloatingActions";
+// import { CAPABILITY_ITEMS, FAQ_ITEMS } from "./data/content";
 import Loader from "./components/Loader";
-import Automation from "./components/Automation";
+// import Automation from "./components/Automation";
+import ComingSoon from "./components/ComingSoon";
 
 const FADE_DURATION = 700;
 
@@ -73,6 +74,9 @@ function App() {
     <>
       {loaderMounted && <Loader visible={loaderVisible} />}
 
+      <ComingSoon />
+
+      {/*
       <a className="sr-only" href="#main">
         Skip to main content
       </a>
@@ -117,6 +121,7 @@ function App() {
 
       <Footer />
       <FloatingActions />
+      */}
     </>
   );
 }
