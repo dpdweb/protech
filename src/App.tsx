@@ -7,13 +7,16 @@ import Experience from "./components/Experience";
 import Projects from "./components/Projects";
 import CapabilitiesDiagram from "./components/CapabilitiesDiagram";
 import SplitList from "./components/SplitList";
+// import SplitListA from "./components/SplitListA";
 import Footer from "./components/Footer";
 import FloatingActions from "./components/FloatingActions";
-import { CAPABILITY_ITEMS, FAQ_ITEMS } from "./data/content";
+// import { CAPABILITY_ITEMS, FAQ_ITEMS } from "./data/content";
+import {  FAQ_ITEMS } from "./data/content";
 import Loader from "./components/Loader";
 import Automation from "./components/Automation";
 import ContactModal from "./components/ContactModal";
 import { ContactModalProvider } from "./context/ContactModalContext";
+import Founder from "./components/Founder";
 
 // import ComingSoon from "./components/ComingSoon";
 
@@ -81,14 +84,15 @@ function App() {
 
       <main id="main">
         <Hero />
-        <Challenges />
+         <Challenges />
         <Automation />
         <ServicePanels />
         <Experience />
+        <Founder />
         <Projects />
         <CapabilitiesDiagram />
-
-        <SplitList
+        
+        {/* <SplitListA
           ariaLabel="Here when you need us"
           reverse
           heading={
@@ -100,7 +104,8 @@ function App() {
           }
           subtitle="Help you navigate every step with confidence"
           items={CAPABILITY_ITEMS}
-        />
+        /> */}
+
         <SplitList
           ariaLabel="Frequently asked questions"
           heading={

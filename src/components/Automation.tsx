@@ -21,7 +21,7 @@ export default function Automation() {
 >
       <img
         className="absolute inset-0 h-full w-full object-cover"
-        src="/img/automations/automation_bg.png"
+        src="/img/automations/automation_bg.webp"
         alt=""
         loading="lazy"
       />
@@ -44,13 +44,14 @@ export default function Automation() {
         <div className="group relative mx-auto hidden aspect-[2170/850] w-full max-w-[1400px] md:block">
           <div className="absolute top-1/3 left-1/2 z-20 aspect-square w-[16%] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_0_60px_rgba(207,38,43,0.5)]">
             <img
-              src="/img/automations/logo-mark.svg"
+              src="/img/automations/logo-mark.png"
               alt="ProTechX Systems"
               className="h-full w-full scale-75 object-contain"
             />
           </div>
 
           {AUTOMATION_PAIRS.map((pair) => (
+
             <div key={pair.text}>
               <div
                 className={`absolute z-10 aspect-square -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full border border-white/10 shadow-[0_0_30px_rgba(207,38,43,0.35)] ${pair.iconSize} ${MOVE_TRANSITION}`}
@@ -74,7 +75,7 @@ export default function Automation() {
               </div>
 
               <div
-                className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
+                className={`glass-pill absolute z-10 px-6 py-4 text-center  ${MOVE_TRANSITION}`}
                 style={
                   {
                     "--rest-top": pair.textRest.top,
@@ -92,17 +93,18 @@ export default function Automation() {
                 }
                 data-pair-text
               >
-                <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
+                <p className="m-0 font-[family-name:var(--font-body)]  text-[12px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
                   {pair.text}
                 </p>
               </div>
             </div>
+
           ))}
 
           {[AUTOMATION_SOLO1_CALLOUT, AUTOMATION_SOLO2_CALLOUT].map((solo) => (
             <div
               key={solo.text}
-              className={`absolute z-10 -translate-y-1/2 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm ${MOVE_TRANSITION}`}
+              className={`glass-pill absolute z-10 px-6 py-4 text-center ${MOVE_TRANSITION}`}
               style={
                 {
                   "--rest-top": solo.rest.top,
@@ -159,7 +161,7 @@ export default function Automation() {
         <div className="relative mx-auto block w-full md:hidden" style={{ minHeight: "760px" }}>
           <div className="absolute  top-[25%] left-1/2 -z-0 aspect-square w-[110px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-full bg-white shadow-[0_0_60px_rgba(207,38,43,0.5)]">
             <img
-              src="/img/automations/logo-mark.svg"
+              src="/img/automations/logo-mark.png"
               alt="ProTechX Systems"
               className="h-full w-full scale-75 object-contain"
             />
@@ -176,20 +178,20 @@ export default function Automation() {
               </div>
 
               {/* Callout — static position, no transition */}
-              <div
-                className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
-                style={{ top: pair.textMobile.top, left: pair.textMobile.left, width: pair.textWidthMobile }}
-              >
-                <p className="m-0 font-[family-name:var(--font-body)] text-[10px] leading-[1.5] font-light tracking-[0.36px] text-white/90">
-                  {pair.text}
-                </p>
-              </div>
+              <div className="glass-pill absolute z-10 px-6 py-4 text-center"
+  style={{ top: pair.textMobile.top, left: pair.textMobile.left, width: pair.textWidthMobile }}
+>
+  <p className="m-0 font-[family-name:var(--font-body)] text-[12px] leading-[1.6] font-light tracking-[0.36px] text-white">
+    {pair.text}
+  </p>
+</div>
+              
             </div>
           ))}
 
           {/* Solo callouts — static, text-only, same as desktop */}
           <div
-            className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
+            className="glass-pill absolute z-10 px-6 py-4 text-center"
             style={{
               top: AUTOMATION_SOLO1_CALLOUT.mobile.top,
               left: AUTOMATION_SOLO1_CALLOUT.mobile.left,
@@ -202,7 +204,7 @@ export default function Automation() {
           </div>
 
           <div
-            className="absolute z-10 rounded-full border border-white/10 bg-black/40 px-6 py-4 text-center backdrop-blur-sm"
+            className="glass-pill absolute z-10 px-6 py-4 text-center"
             style={{
               top: AUTOMATION_SOLO2_CALLOUT.mobile.top,
               left: AUTOMATION_SOLO2_CALLOUT.mobile.left,

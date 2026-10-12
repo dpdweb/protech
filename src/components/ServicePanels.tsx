@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect, useLayoutEffect } from "react";
 import { SERVICE_PANELS } from "../data/content";
-import { ChevronRight, ChevronLeft } from 'lucide-react';
+import { ChevronRight, ChevronLeft } from "lucide-react";
 
-// Displayed in reverse order: 04, 03, 02, 01
 const BASE_PANELS = SERVICE_PANELS;
 const total = BASE_PANELS.length;
 
@@ -18,7 +17,7 @@ const WHEEL_COOLDOWN = 700;
 
 export default function ServicePanels() {
   const sliderRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLDivElement>(null);
+  const headerRef = useRef<HTMLParagraphElement>(null);
 
   // Start in the middle copy
   const [currentIndex, setCurrentIndex] = useState(total);
@@ -103,14 +102,9 @@ export default function ServicePanels() {
 
   // Vertical wheel input drives horizontal panel navigation.
   const handleWheel = (event: React.WheelEvent<HTMLDivElement>) => {
-    // Ignore genuinely horizontal gestures (e.g. a trackpad swipe already
-    // moving the slider natively) so we don't fight the browser's own scroll.
     if (Math.abs(event.deltaX) > Math.abs(event.deltaY)) return;
-
     if (Math.abs(event.deltaY) < WHEEL_THRESHOLD) return;
 
-    // Stop the page itself from scrolling vertically while the user is
-    // interacting with this slider via the wheel.
     event.preventDefault();
 
     if (isWheelLocked.current) return;
@@ -129,8 +123,8 @@ export default function ServicePanels() {
 
   return (
     <section id="services" className="relative z-10 bg-black py-[clamp(56px,9vw,130px)]" aria-label="Service areas">
-      {/* Static control bar — pinned to the image's top edge, ignores horizontal scroll */}
-      <div className="pointer-events-none absolute right-0 left-0 top-60 z-20 flex justify-end px-[clamp(20px,6vw,100px)] max-md:top-20 max-[430px]:top-16">
+      {/* Static control bar — unchanged */}
+      <div className="pointer-events-none absolute right-0 left-0 top-40 z-20 flex justify-end px-[clamp(20px,6vw,100px)] max-md:top-0 max-[430px]:top-16">
         <div className="pointer-events-auto flex items-center gap-5 max-md:gap-3">
           {hasNavigated && (
             <button
@@ -172,33 +166,45 @@ export default function ServicePanels() {
             data-service-panel
             key={`${panel.number}-${i}`}
           >
-            <div className="px-[clamp(20px,6vw,100px)]">
-              <div ref={i === 0 ? headerRef : undefined}>
-                <p className="m-0 mb-6 font-[family-name:var(--font-display)] text-[clamp(64px,9vw,120px)] font-bold tracking-[3.6px] text-white max-[430px]:text-[56px]">
-                  {panel.number}
-                </p>
+            {/*
+              One grid, two layouts:
+              - Mobile: [number | title] on row 1; image + lists span both columns.
+              - Desktop (lg): number in a ~28% left column; title, image and
+                lists all sit in the right column.
+            */}
+            <div className="grid grid-cols-[auto_1fr] gap-x-5 gap-y-5 px-[clamp(20px,6vw,100px)] lg:grid-cols-[28fr_72fr] lg:gap-x-0 lg:gap-y-2">
+              {/* Number */}
+              <p
+                ref={i === 0 ? headerRef : undefined}
+                className="col-start-1 row-start-1 m-0 font-[family-name:var(--font-display)] text-[clamp(64px,9vw,120px)] leading-[0.85] font-bold tracking-[3.6px] text-white max-[430px]:text-[56px]"
+              >
+                {panel.number}
+              </p>
 
-                <h3 className="m-0 mb-6 font-[family-name:var(--font-body)] text-[22px] font-semibold tracking-[0.66px]">
-                  {panel.title}
-                </h3>
-              </div>
+              {/* Title — vertically centered against the number */}
+              <h3 className="col-start-2 row-start-1 m-0 self-center font-[family-name:var(--font-body)] text-[20px] leading-[1.3] font-semibold tracking-[0.66px] lg:text-[22px]">
+                {panel.title}
+              </h3>
 
+              {/* Image — full width on mobile, ~57% of the right column on desktop */}
               {panel.image ? (
                 <img
-                  className="mb-8 aspect-[890/400] w-[600px] rounded-2xl object-cover"
+                  className="col-span-2 row-start-2 aspect-[769/450] w-full object-cover lg:col-span-1 lg:col-start-2 lg:aspect-[973/378] lg:w-[57%]"
                   src={panel.image}
                   alt=""
                   loading="lazy"
                 />
               ) : (
                 <div
-                  className="mb-8 aspect-[890/400] w-full rounded-2xl bg-[linear-gradient(135deg,#1a1a1a_0%,#050505_100%)]"
+                  className="col-span-2 row-start-2 aspect-[769/450] w-full bg-[linear-gradient(135deg,#1a1a1a_0%,#050505_100%)] lg:col-span-1 lg:col-start-2 lg:aspect-[973/378] lg:w-[57%]"
                   role="img"
                   aria-label={panel.title}
                 />
               )}
 
-              <div className="mx-auto grid max-w-[1240px] grid-cols-2 gap-10 max-lg:grid-cols-1 max-lg:gap-6">
+              {/* Lists — single stacked column on mobile, two columns on desktop
+                  (the split lines up with the image's right edge) */}
+              <div className="col-span-2 row-start-3 mt-1 grid grid-cols-1 lg:col-span-1 lg:col-start-2 lg:mt-7 lg:grid-cols-[57fr_43fr]">
                 <ul className="m-0 list-none p-0 font-[family-name:var(--font-body)] text-[13px] font-light tracking-[0.36px]">
                   {panel.listA.map((line) => (
                     <li key={line} className="flex gap-2 leading-7">

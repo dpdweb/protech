@@ -26,7 +26,7 @@ export default function SplitList({
 
   return (
     <section
-      className={`relative z-20 bg-black mx-auto grid max-w-[1240px] gap-12 px-[clamp(20px,6vw,100px)] py-[clamp(56px,9vw,130px)] max-lg:grid-cols-1 ${
+      className={`relative z-20 bg-black mx-auto grid gap-12 px-[clamp(20px,6vw,100px)] py-[clamp(56px,9vw,130px)] max-lg:grid-cols-1 ${
         reverse
           ? "grid-cols-[1fr_1.05fr]"
           : "grid-cols-[1.05fr_1fr]"

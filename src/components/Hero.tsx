@@ -32,22 +32,22 @@ export default function Hero() {
 
   return (
     <section
-      className="relative flex min-h-[800px] items-center overflow-hidden pt-[160px] pb-20 px-[clamp(20px,6vw,100px)] after:absolute after:inset-0 after:z-0 after:bg-[linear-gradient(180deg,rgba(0,0,0,0.35)_0%,rgba(0,0,0,0.55)_100%)] max-lg:min-h-[640px] max-lg:pt-[140px] max-md:min-h-[560px] max-md:px-5 max-md:pt-[120px] max-md:pb-[60px] max-md:after:hidden"
+      className="relative flex min-h-[800px] items-center overflow-hidden pt-[160px] pb-20 px-[clamp(20px,6vw,100px)] after:absolute after:inset-0 after:z-0 after:bg-[linear-gradient(180deg,rgba(0,0,0,0.15)_0%,rgba(0,0,0,0.10)_100%)] max-lg:min-h-[640px] max-lg:pt-[140px] max-md:min-h-[560px] max-md:px-5 max-md:pt-[120px] max-md:pb-[60px] max-md:after:hidden"
       aria-label="Introduction"
     >
       <img
-        src="/img/hero-bg.jpg"
+        src="/img/hero-bg.webp"
         alt=""
         aria-hidden="true"
         loading="eager"
         className="absolute inset-0 -z-10 hidden h-full w-full object-cover md:block"
       />
       <img
-        src="/img/hero-bg-mobile.jpg"
+        src="/img/hero-bg-mobile.webp"
         alt=""
         aria-hidden="true"
         loading="eager"
-        className="absolute inset-0 -z-10 block h-full w-full object-cover md:hidden"
+        className="absolute inset-0 -z-10 -top-20 block h-full w-full object-cover md:hidden"
       />
 
       <div className="relative z-10 max-w-[600px] max-md:pt-100 max-[430px]:pt-16">
@@ -62,39 +62,40 @@ export default function Hero() {
           reliable production systems.
         </p>
 
-        <div className="mb-8 flex items-center gap-3.5 max-[430px]:flex-col max-[430px]:items-start max-[430px]:gap-2.5">
-          <div className="flex">
-            <img
-              src="/img/ellipse-1.png"
-              alt=""
-              width={43}
-              height={42}
-              loading="lazy"
-              className="ml-0 h-[42px] w-[43px] rounded-full object-cover"
-            />
-            <img
-              src="/img/ellipse-2.png"
-              alt=""
-              width={42}
-              height={42}
-              loading="lazy"
-              className="-ml-3.5 h-[42px] w-[42px] rounded-full object-cover"
-            />
-            <img
-              src="/img/ellipse-3.png"
-              alt=""
-              width={43}
-              height={42}
-              loading="lazy"
-              className="-ml-3.5 h-[42px] w-[43px] rounded-full object-cover"
-            />
-          </div>
-          <p className="max-w-[420px] font-[family-name:var(--font-body)] text-xs leading-[22px] tracking-[0.36px]">
-            <strong className="font-bold">10+ years</strong> of industrial engineering and
-            automation-related experience, regulated industry know-how and structured project
-            delivery.
-          </p>
-        </div>
+<div className="mb-8 flex w-full flex-col items-start gap-2.5 sm:flex-row sm:items-center sm:gap-3.5">
+  <div className="flex w-full shrink-0 sm:w-auto">
+    <img
+      src="/img/ellipse-1.webp"
+      alt=""
+      width={43}
+      height={42}
+      loading="lazy"
+      className="h-[42px] w-[43px] shrink-0 rounded-full object-cover"
+    />
+    <img
+      src="/img/ellipse-2.webp"
+      alt=""
+      width={42}
+      height={42}
+      loading="lazy"
+      className="-ml-3.5 h-[42px] w-[42px] shrink-0 rounded-full object-cover"
+    />
+    <img
+      src="/img/ellipse-3.webp"
+      alt=""
+      width={43}
+      height={42}
+      loading="lazy"
+      className="-ml-3.5 h-[42px] w-[43px] shrink-0 rounded-full object-cover"
+    />
+  </div>
+
+  <p className="m-0 w-full min-w-0 max-w-none font-[family-name:var(--font-body)] text-xs leading-[22px] tracking-[0.36px] sm:max-w-[420px] sm:flex-1">
+    <strong className="font-bold">10+ years</strong> of industrial engineering and
+    automation-related experience, regulated industry know-how and structured
+    project delivery.
+  </p>
+</div>
 
         <div className="flex flex-wrap gap-4 max-md:flex-col max-md:items-stretch">
 <button

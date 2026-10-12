@@ -1,14 +1,14 @@
 export default function Experience() {
   return (
     <section className=" z-0 overflow-hidden bg-black py-[clamp(56px,9vw,130px)]" aria-label="Experience">
-      <div className="mx-auto max-w-[1240px] px-[clamp(20px,6vw,100px)] max-md:px-0">
+      <div className="mx-auto  px-[clamp(20px,6vw,100px)] max-md:px-0">
         {/* Desktop / tablet — original overlay bento grid */}
         <div className="hidden grid-cols-2 gap-3 max-xl:grid-cols-1 md:grid">
           {/* Hero row — spans full width */}
           <div className="relative col-span-2 flex min-h-[240px] items-center overflow-hidden bg-black p-10 max-xl:col-span-1">
             <img
               className="absolute inset-0 h-full w-full object-cover object-right"
-              src="/img/experience/exp1.jpg"
+              src="/img/experience/exp1.webp"
               alt=""
               loading="lazy"
             />
@@ -27,7 +27,7 @@ export default function Experience() {
           <div className="relative row-span-2 flex min-h-[460px] flex-col justify-between overflow-hidden rounded-bl-2xl bg-black p-11 max-xl:row-span-1 max-xl:min-h-[320px]">
             <img
               className="absolute inset-0 h-full w-full object-cover"
-              src="/img/experience/exp2.jpg"
+              src="/img/experience/exp2.webp"
               alt=""
               loading="lazy"
             />
@@ -52,7 +52,7 @@ export default function Experience() {
           <div className="relative flex min-h-[220px] flex-col justify-center overflow-hidden bg-white p-11">
             <img
               className="absolute inset-0 h-full w-full object-cover"
-              src="/img/experience/exp3.jpg"
+              src="/img/experience/exp3.webp"
               alt=""
               loading="lazy"
             />
@@ -71,7 +71,7 @@ export default function Experience() {
           </div>
 
           {/* Founder-led Quality Control — bottom right cell */}
-          <div className="relative flex min-h-[220px] flex-col justify-center overflow-hidden rounded-br-2xl bg-[linear-gradient(180deg,#b8bfc0_0%,#ededed_100%)] p-11">
+          <div className="relative flex min-h-[220px] flex-col justify-center overflow-hidden  bg-[linear-gradient(180deg,#b8bfc0_0%,#ededed_100%)] p-11">
             <div className="relative z-10">
               <h3 className="m-0 font-[family-name:var(--font-body)] text-[clamp(22px,2.6vw,32px)] leading-[1.25] font-medium tracking-[0.96px] text-[#151515]">
                 Founder-led Quality Control
@@ -99,7 +99,7 @@ export default function Experience() {
           {/* Hero image — dedicated mobile crop/asset */}
           <img
             className="h-[260px] w-full object-cover"
-            src="/img/experience/exp1-mobile.jpg"
+            src="/img/experience/exp1-mobile.webp"
             alt=""
             loading="lazy"
           />
@@ -117,7 +117,7 @@ export default function Experience() {
           {/* German Engineering image — dedicated mobile crop/asset */}
           <img
             className="h-[320px] w-full object-cover"
-            src="/img/experience/exp2-mobile.jpg"
+            src="/img/experience/exp2-mobile.webp"
             alt=""
             loading="lazy"
           />
@@ -141,7 +141,7 @@ export default function Experience() {
             </div>
             <img
               className="h-full w-full object-cover"
-              src="/img/experience/exp3-mobile.jpg"
+              src="/img/experience/exp3-mobile.webp"
               alt=""
               loading="lazy"
             />
