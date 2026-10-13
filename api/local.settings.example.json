@@ -1,0 +1,12 @@
+{
+  "IsEncrypted": false,
+  "Values": {
+    "AzureWebJobsStorage": "",
+    "FUNCTIONS_WORKER_RUNTIME": "node",
+    "AZURE_TENANT_ID": "your-tenant-id",
+    "AZURE_CLIENT_ID": "your-client-id",
+    "AZURE_CLIENT_SECRET": "do-not-commit-real-secret",
+    "MAIL_FROM": "forms@protechxsystems.com",
+    "MAIL_TO": "sales@protechxsystems.com"
+  }
+}
