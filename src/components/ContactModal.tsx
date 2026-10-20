@@ -219,7 +219,7 @@ export default function ContactModal() {
 
         <div className="mt-[clamp(70px,10vw,130px)] flex items-center justify-between gap-8 max-sm:flex-col max-sm:items-start">
           <div className="flex items-center gap-5">
-            <a href="https://www.linkedin.com/company/protechx-systems-consultancies-fzco/" aria-label="LinkedIn">
+            <a href="https://www.linkedin.com/company/protechx-systems-consultancies-fzco/" target="_blank" aria-label="LinkedIn">
               <img src="/img/linkedin-icon.svg" alt="" className="h-5 w-5" />
             </a>
           </div>

@@ -103,7 +103,7 @@ async function sendContactEmail(accessToken, contact) {
   const graphUrl = `https://graph.microsoft.com/v1.0/users/${encodeURIComponent(mailFrom)}/sendMail`;
   const graphPayload = {
     message: {
-      subject: `New ProTechX Website Enquiry - ${contact.company} - ${fullName}`,
+      subject: `New ProTechX Website Enquiry - ${contact.company} - ${fullName}`.replace(/[\r\n]+/g, " "),
       body: {
         contentType: "HTML",
         content: messageBody,
@@ -160,6 +160,10 @@ app.http("contact", {
     try {
       body = await request.json();
     } catch {
+      return jsonResponse(400, { message: "Invalid request." });
+    }
+
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
       return jsonResponse(400, { message: "Invalid request." });
     }
 

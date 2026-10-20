@@ -77,7 +77,7 @@ export default function Projects() {
                       {project.technologies}
                     </p>
                     <p className="m-0 font-[family-name:var(--font-body)] text-xs leading-[20px] tracking-[0.36px] text-white/72">
-                      <strong className="font-semibold text-white">Outcome message: </strong>
+                      <strong className="font-semibold text-white">Outcome: </strong>
                       {project.outcome}
                     </p>
                   </div>

@@ -373,7 +373,7 @@ export const AUTOMATION_CALLOUTS: AutomationCallout[] = [
     align: "left",
   },
   {
-    text: "Designing secure and scalable systems for both smaller skids/package units and larger production environments.",
+    text: "Designing secure and scalable systems for both smaller skids/package units and larger production environments",
     position: "top-[29%] right-[3%] w-[30%]",
     align: "left",
   },
@@ -410,22 +410,22 @@ export const DIAGRAM_NODES: DiagramNode[] = [
   {
     icon: "/img/capabilities/ot_security.svg",
     label: "OT Security",
-    tooltip: "IQ/OQ/PQ Compliance, Documentation",
+    tooltip: "Network security, segmentation and Threat mitigation",
   },
   {
     icon: "/img/capabilities/validation.svg",
     label: "Validation",
-    tooltip: "Functional, Cybersecurity safety, IOT",
+    tooltip: "IQ/OQ/PQ Compliance, Documentation",
   },
   {
     icon: "/img/capabilities/commissioning.svg",
     label: "Commissioning",
-    tooltip: "Network security, segmentation and Threat mitigation",
+    tooltip: "Site execution, testing, handover and performance",
   },
   {
     icon: "/img/capabilities/support.svg",
     label: "Support",
-    tooltip: "Site execution, testing, handover and performance",
+    tooltip: "Functional, Cybersecurity safety, IOT",
   },
   {
     icon: "/img/capabilities/coordination.svg",
@@ -486,7 +486,7 @@ export const AUTOMATION_PAIRS: AutomationPair[] = [
   },
   {
     icon: "/img/automations/icon-modular-network.webp",
-    text: "Designing secure and scalable systems for both smaller skids/package units and larger production environments.",
+    text: "Designing secure and scalable systems for both smaller skids/package units and larger production environments",
     iconRest: { top: "80%", left: "65%" },
     iconHover: { top: "30%", left: "65%" },
     textRest: { top: "35%", left: "76%" },
